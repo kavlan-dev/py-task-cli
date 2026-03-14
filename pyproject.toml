@@ -1,0 +1,21 @@
+[project]
+name = "py-task-cli"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "kavlan-dev",email = "kazancevvlad572@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+]
+
+[tool.poetry]
+packages = [{include = "py_task_cli", from = "src"}]
+
+[tool.poetry.scripts]
+task-cli = "py_task_cli.main:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

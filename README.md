@@ -21,7 +21,15 @@
 ### Установка
 
 1. Убедитесь, что у вас установлен Python 3.6 или выше
-2. Клонируйте репозиторий или скачайте исходный код
+2. Установите Poetry:
+   ```bash
+   pip install poetry
+   ```
+3. Клонируйте репозиторий или скачайте исходный код
+4. Установите зависимости:
+   ```bash
+   poetry install
+   ```
 
 ### Использование
 
@@ -29,48 +37,48 @@
 
 ```bash
 # Добавить новую задачу
-python main.py add "Купить молоко"
+poetry run task-cli add "Купить молоко"
 
 # Показать все задачи
-python main.py list
+poetry run task-cli list
 
 # Показать задачи с определенным статусом
-python main.py list todo
-python main.py list in-progress
-python main.py list done
+poetry run task-cli list todo
+poetry run task-cli list in-progress
+poetry run task-cli list done
 
 # Обновить задачу
-python main.py update 1 "Купить молоко и хлеб"
+poetry run task-cli update 1 "Купить молоко и хлеб"
 
 # Отметить задачу как в процессе
-python main.py mark-in-progress 1
+poetry run task-cli mark-in-progress 1
 
 # Отметить задачу как выполненную
-python main.py mark-done 1
+poetry run task-cli mark-done 1
 
 # Удалить задачу
-python main.py delete 1
+poetry run task-cli delete 1
 ```
 
 ### Примеры использования
 
 ```bash
 # Добавить несколько задач
-python main.py add "Написать отчет"
-python main.py add "Подготовить презентацию"
-python main.py add "Отправить email клиенту"
+poetry run task-cli add "Написать отчет"
+poetry run task-cli add "Подготовить презентацию"
+poetry run task-cli add "Отправить email клиенту"
 
 # Посмотреть все задачи
-python main.py list
+poetry run task-cli list
 
 # Начать работу над задачей
-python main.py mark-in-progress 1
+poetry run task-cli mark-in-progress 1
 
 # Завершить задачу
-python main.py mark-done 1
+poetry run task-cli mark-done 1
 
 # Удалить ненужную задачу
-python main.py delete 3
+poetry run task-cli delete 3
 ```
 
 ## Какую пользу можно извлечь?
@@ -84,8 +92,11 @@ python main.py delete 3
 
 ```
 py-task-cli/
-├── main.py              # Основной файл с логикой приложения
-├── tasks.json           # Файл для хранения задач (создается автоматически)
+├── pyproject.toml       # Файл конфигурации Poetry
+├── src/
+│   ├── __init__.py      # Инициализация пакета
+│   ├── main.py          # Основной файл с логикой приложения
+│   └── tasks.json       # Файл для хранения задач (создается автоматически)
 ├── tests/               # Директория с тестами
 │   └── test_tasks.py    # Тесты для функциональности
 └── README.md            # Документация проекта
@@ -108,6 +119,7 @@ py-task-cli/
 
 * [Официальная документация Python](https://docs.python.org/3/)
 * [JSON в Python](https://docs.python.org/3/library/json.html)
+* [Документация Poetry](https://python-poetry.org/docs/)
 
 ## Лицензия и авторские права
 

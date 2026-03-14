@@ -1,22 +1,16 @@
 import os
 import sys
 
-from main import (
-    add_task,
-    delete_task,
-    list_tasks,
-    load_tasks,
-    mark_task_done,
-    mark_task_in_progress,
-    update_task,
-)
+from src.py_task_cli.depends import get_service
+
+service = get_service()
 
 
 def test_add_task():
     """Тест добавления новой задачи"""
     print("Тест добавления новой задачи...")
-    add_task("Купить молоко")
-    tasks = load_tasks()
+    service.add_task("Купить молоко")
+    tasks = service.list_tasks()
     task = tasks[0]
     assert len(tasks) == 1
     assert task.description == "Купить молоко"
@@ -27,11 +21,11 @@ def test_add_task():
 def test_update_task():
     """Тест обновления задачи"""
     print("Тест обновления задачи...")
-    tasks = load_tasks()
+    tasks = service.list_tasks()
     if tasks:
         task_id = tasks[0].id
-        update_task(task_id, "Купить молоко и хлеб")
-        tasks = load_tasks()
+        service.update_task(task_id, "Купить молоко и хлеб")
+        tasks = service.list_tasks()
         updated_task = next((t for t in tasks if t.id == task_id), None)
         assert updated_task is not None
         assert updated_task.description == "Купить молоко и хлеб"
@@ -43,11 +37,11 @@ def test_update_task():
 def test_mark_in_progress():
     """Тест отметки задачи как в процессе выполнения"""
     print("Тест отметки задачи как в процессе выполнения...")
-    tasks = load_tasks()
+    tasks = service.list_tasks()
     if tasks:
         task_id = tasks[0].id
-        mark_task_in_progress(task_id)
-        tasks = load_tasks()
+        service.mark_task(task_id, "in-progress")
+        tasks = service.list_tasks()
         marked_task = next((t for t in tasks if t.id == task_id), None)
         assert marked_task is not None
         assert marked_task.status == "in-progress"
@@ -61,11 +55,11 @@ def test_mark_in_progress():
 def test_mark_done():
     """Тест отметки задачи как выполненной"""
     print("Тест отметки задачи как выполненной...")
-    tasks = load_tasks()
+    tasks = service.list_tasks()
     if tasks:
         task_id = tasks[0].id
-        mark_task_done(task_id)
-        tasks = load_tasks()
+        service.mark_task(task_id, "done")
+        tasks = service.list_tasks()
         marked_task = next((t for t in tasks if t.id == task_id), None)
         assert marked_task is not None
         assert marked_task.status == "done"
@@ -78,27 +72,27 @@ def test_list_tasks():
     """Тест вывода списка задач"""
     print("Тест вывода списка задач...")
     print("\nВсе задачи:")
-    list_tasks()
+    service.list_tasks()
 
     print("\nЗадачи в статусе 'todo':")
-    list_tasks("todo")
+    service.list_tasks("todo")
 
     print("\nЗадачи в статусе 'in-progress':")
-    list_tasks("in-progress")
+    service.list_tasks("in-progress")
 
     print("\nЗадачи в статусе 'done':")
-    list_tasks("done")
+    service.list_tasks("done")
     print("Тест вывода списка задач пройден")
 
 
 def test_delete_task():
     """Тест удаления задачи"""
     print("Тест удаления задачи...")
-    tasks = load_tasks()
+    tasks = service.list_tasks()
     if tasks:
         task_id = tasks[0].id
-        delete_task(task_id)
-        tasks = load_tasks()
+        service.delete_task(task_id)
+        tasks = service.list_tasks()
         assert not any(t.id == task_id for t in tasks)
         print("Тест удаления задачи пройден")
     else:
